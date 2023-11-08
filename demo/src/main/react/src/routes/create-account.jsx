@@ -3,28 +3,23 @@ import Header from "../components/header"
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../components/footer';
-import NewsHead from '../components/news-head';
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100vh;
+width: 100%;
+  display: grid;
   gap: 50px;
-  /* overflow-y: auto; */
+  overflow-y: auto;
+  grid-template-rows: 1fr 1fr;
   `;
 
 const Content = styled.div`
   width: 100%;
   min-height: 1200px;
-  padding: 180px 15% 0 15%;
-  /* background-color: gray; */
-  display: grid;
-  justify-items: center;
-  gap: 100px;
+  padding: 120px 15% 0 15%;
+  background-color: gray;
 `;
 
 const Trend = styled.div`
-  width: 100%;
-  max-width: 1000px;
   height: 30px;
   margin-bottom: 50px;
   display: flex;
@@ -33,8 +28,6 @@ const Trend = styled.div`
   color: white;
   background-color: aqua;
   gap: 30px;
-  position: absolute;
-  top: 120px;
 `;
 
 const TrendHeader = styled.div`
@@ -54,27 +47,14 @@ const TrendNews = styled.div`
 
 const MainNews = styled.div`
   width: 100%;
-  max-width: 1000px;
   height: 500px;
-  /* padding: 20px;
+  padding: 20px;
   border: 1px solid #999999;
-  border-radius: 10px; */
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(4, minmax(250px, auto));
-  grid-template-rows: repeat(4, minmax(150px, auto));
-  row-gap: 10px;
-  column-gap: 20px;
-  grid-template-areas: 
-    "main main main list"
-    "main main main list"
-    "main main main list"
-    "subs subs subs list";
-    .main-news { grid-area: main; }
-    .sub-news { grid-area: subs; }
+  border-radius: 10px;
 `;
 
-export default function Home() {
+
+export default function CreateAccount() {
   const [data, setData] = useState('');
   useEffect(() => {
     //java에서 데이터 가져오기
@@ -103,12 +83,7 @@ export default function Home() {
           <TrendNews>test news Title Here</TrendNews>
         </Trend>
         <MainNews>
-          <NewsHead className="main-news">1</NewsHead>
-          {/* <NewsSub className="sub-news">2</NewsSub>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist> */}
+          <div>받아온 값 : {data}</div>
         </MainNews>
       </Content>
       <Footer></Footer>
