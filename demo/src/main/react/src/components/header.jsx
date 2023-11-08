@@ -13,6 +13,7 @@ const Wrapper = styled.div`
     top: 0;
     backdrop-filter: blur(10px);
     box-shadow: 5px 5px 50px 5px #99999944;
+    z-index: 99;
 `;
 
 const Menu = styled.div`
@@ -28,8 +29,8 @@ const UserMenu = styled.div`
     height: 20px;
     display: flex;
     align-items: center;
-    justify-content: right;
-    padding: 0 80px;
+    justify-content: center;
+    padding-right: 80px;
 `;
 
 const ContentMenu = styled.div`
@@ -52,6 +53,7 @@ const LoginButton = styled.div`
         width: 100px;
         height: 30px;
         padding: 2px 20px;
+        margin-top: 8px;
         color: black;
         display: flex;
         justify-content: center;

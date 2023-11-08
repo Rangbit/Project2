@@ -3,12 +3,14 @@ import newsImage from '../assets/news1.jpg';
 
 
 const Wrapper = styled.div`
+    width:100%;
+    height:100%;
     position: relative;
-
+    grid-area: main;
 `;
 const ImageBox = styled.div`
-    width:780px;
-    height:400px;
+    width:790px;
+    height:450px;
     overflow:hidden;
     margin:0 auto;
 `;
@@ -16,10 +18,9 @@ const ImageBox = styled.div`
 const TextBox = styled.div`
     width: 600px;
     height: 100px;
-    /* background-color: gray; */
     align-items: center;
     position: absolute;
-    top: 260px;
+    top: 320px;
     left: 40px;
 `;
 
@@ -43,15 +44,16 @@ const NewsText = styled.div`
     line-height: 30px;
 `;
 
+
 export default function NewsHead() {
     return (
         <Wrapper>
             <ImageBox>
                 <NewsImage src={newsImage}></NewsImage>
-            <TextBox>
-                <NewsCategori>Entertainment</NewsCategori>
-                <NewsText>[공식] SM "레드벨벳 해체설 사실무근, '해피엔딩' 계정명 변경=신보 콘셉트"</NewsText>
-            </TextBox>
+                <TextBox>
+                    <NewsCategori>Entertainment</NewsCategori>
+                    <NewsText>[공식] SM "레드벨벳 해체설 사실무근, '해피엔딩' 계정명 변경=신보 콘셉트"</NewsText>
+                </TextBox>
             </ImageBox>
         </Wrapper>
     )

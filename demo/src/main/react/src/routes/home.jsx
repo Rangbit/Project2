@@ -4,21 +4,22 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../components/footer';
 import NewsHead from '../components/news-head';
+import NewsSub from '../components/news-sub';
+import Newslist from '../components/news-list';
+import newsImage from '../assets/news1.jpg';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   gap: 50px;
-  /* overflow-y: auto; */
   `;
 
 const Content = styled.div`
   width: 100%;
   min-height: 1200px;
   padding: 180px 15% 0 15%;
-  /* background-color: gray; */
-  display: grid;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   gap: 100px;
 `;
 
@@ -31,10 +32,10 @@ const Trend = styled.div`
   align-items: center;
   padding: 0 30px;
   color: white;
-  background-color: aqua;
   gap: 30px;
   position: absolute;
   top: 120px;
+  white-space: nowrap;
 `;
 
 const TrendHeader = styled.div`
@@ -55,14 +56,11 @@ const TrendNews = styled.div`
 const MainNews = styled.div`
   width: 100%;
   max-width: 1000px;
-  height: 500px;
-  /* padding: 20px;
-  border: 1px solid #999999;
-  border-radius: 10px; */
+  height: 640px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, minmax(250px, auto));
-  grid-template-rows: repeat(4, minmax(150px, auto));
+  grid-template-rows: repeat(4, minmax(50px, auto));
   row-gap: 10px;
   column-gap: 20px;
   grid-template-areas: 
@@ -70,9 +68,8 @@ const MainNews = styled.div`
     "main main main list"
     "main main main list"
     "subs subs subs list";
-    .main-news { grid-area: main; }
-    .sub-news { grid-area: subs; }
 `;
+
 
 export default function Home() {
   const [data, setData] = useState('');
@@ -99,16 +96,15 @@ export default function Home() {
       <Header></Header>
       <Content>
         <Trend>
-          <TrendHeader>TrendNews</TrendHeader>
-          <TrendNews>test news Title Here</TrendNews>
+          <TrendHeader>Trend News</TrendHeader>
+          <TrendNews>연합뉴스 · 서울지하철 내일 오전 9시부터 파업 돌입…노사 교섭 결렬</TrendNews>
         </Trend>
         <MainNews>
-          <NewsHead className="main-news">1</NewsHead>
-          {/* <NewsSub className="sub-news">2</NewsSub>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist>
-          <Newslist className="list-news">3</Newslist> */}
+          <NewsHead></NewsHead>
+          <Newslist></Newslist>
+          <NewsSub></NewsSub>
+          <NewsSub></NewsSub>
+          <NewsSub></NewsSub>
         </MainNews>
       </Content>
       <Footer></Footer>
