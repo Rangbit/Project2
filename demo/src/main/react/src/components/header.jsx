@@ -151,6 +151,9 @@ export default function Header() {
                             <MenuItem>Life Style</MenuItem>
                         </Link>
                         <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
+                            <MenuItem>Sports</MenuItem>
+                        </Link>
+                        <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
                             <MenuItem>Board</MenuItem>
                         </Link>
                     </NewsCategori>

@@ -3,21 +3,20 @@ import Header from "../components/header"
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../components/footer';
-import NewsHead from '../components/news-head';
-import NewsSub from '../components/news-sub';
-import Newslist from '../components/news-list';
-import newsImage from '../assets/news1.jpg';
+import { NewsHead, NewsSub, Newslist } from '../components/news';
+import BoardSNS from '../components/board-sns';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
+  padding-top: 180px;
   gap: 50px;
   `;
 
 const Content = styled.div`
   width: 100%;
-  min-height: 1200px;
-  padding: 180px 15% 0 15%;
+  padding: 0 15%;
+  margin-bottom: 200px;
   display: flex;
   justify-content: center;
   gap: 100px;
@@ -55,8 +54,7 @@ const TrendNews = styled.div`
 
 const MainNews = styled.div`
   width: 100%;
-  max-width: 1000px;
-  height: 640px;
+  height: 690px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, minmax(250px, auto));
@@ -70,6 +68,41 @@ const MainNews = styled.div`
     "subs subs subs list";
 `;
 
+const MainBoard = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  /* background-color: aqua; */
+`;
+
+const HeadTitle = styled.div`
+  width: 100%;
+  height: 50px;
+  padding: 60px 16%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+`;
+
+const HeadTitleText = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const HeadTitleMore = styled.div`
+  padding: 4px 10px;
+  font-size: 16px;
+  border: 1px solid #99999999;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default function Home() {
   const [data, setData] = useState('');
@@ -106,6 +139,18 @@ export default function Home() {
           <NewsSub></NewsSub>
           <NewsSub></NewsSub>
         </MainNews>
+      </Content>
+      <HeadTitle>
+        <HeadTitleText>Board</HeadTitleText>
+        <HeadTitleMore>more &rsaquo;</HeadTitleMore>
+      </HeadTitle>
+      <Content>
+        <MainBoard>
+          <BoardSNS></BoardSNS>
+          <BoardSNS></BoardSNS>
+          <BoardSNS></BoardSNS>
+          <BoardSNS></BoardSNS>
+        </MainBoard>
       </Content>
       <Footer></Footer>
     </Wrapper>
