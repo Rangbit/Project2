@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components"
 import searchLogo from "../assets/search-logo.svg";
+import newssummary from '../assets/news-summary-logo.png';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -14,6 +15,14 @@ const Wrapper = styled.div`
     backdrop-filter: blur(10px);
     box-shadow: 5px 5px 50px 5px #99999944;
     z-index: 99;
+`;
+
+const WrapperBox = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Menu = styled.div`
@@ -30,7 +39,7 @@ const UserMenu = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 80px;
+    padding-right: 150px;
 `;
 
 const ContentMenu = styled.div`
@@ -70,13 +79,12 @@ const Logo = styled.div`
     padding: 0 50px;
 `;
 
-const MainLogo = styled.div`
+const MainLogo = styled.img`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 120px;
     height: 60px;
-    background-color: aqua;
 `;
 
 const NewsCategori = styled.div`
@@ -105,12 +113,12 @@ const SearchForm = styled.form`
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding-right: 80px;
+    padding-right: 150px;
     padding-top: 10px;
 `;
 
 const SearchInput = styled.input`
-    width: 80%;
+    width: 200px;
     height: 20px;
     border-radius: 5px;
     border: 1px solid #999999;
@@ -130,28 +138,20 @@ export default function Header() {
 
     return (
         <Wrapper>
+            <WrapperBox>
             <Logo>
                 <Link to="/" style={{ textDecoration: "none", width: "10%" }}>
-                    <MainLogo>logo</MainLogo>
+                    <MainLogo src={newssummary}></MainLogo>
                 </Link>
             </Logo>
             <Menu>
                 <ContentMenu>
                     <NewsCategori>
                         <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
-                            <MenuItem>Entertainment</MenuItem>
+                            <MenuItem>Daily</MenuItem>
                         </Link>
                         <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
-                            <MenuItem>Business</MenuItem>
-                        </Link>
-                        <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
-                            <MenuItem>Travel</MenuItem>
-                        </Link>
-                        <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
-                            <MenuItem>Life Style</MenuItem>
-                        </Link>
-                        <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
-                            <MenuItem>Sports</MenuItem>
+                            <MenuItem>News</MenuItem>
                         </Link>
                         <Link to="/" style={{ textDecoration: "none", width: "20%" }}>
                             <MenuItem>Board</MenuItem>
@@ -173,6 +173,7 @@ export default function Header() {
                     <SearchLogo src={searchLogo}></SearchLogo>
                 </SearchForm>
             </SubMenu>
+            </WrapperBox>
         </Wrapper>
     )
 }

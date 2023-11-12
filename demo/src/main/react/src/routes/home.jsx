@@ -22,6 +22,14 @@ const Content = styled.div`
   gap: 100px;
 `;
 
+const ContentHead = styled.div`
+  width: 100%;
+  padding: 0 15%;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+`;
+
 const Trend = styled.div`
   width: 100%;
   max-width: 1000px;
@@ -54,7 +62,6 @@ const TrendNews = styled.div`
 
 const MainNews = styled.div`
   width: 100%;
-  height: 690px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, minmax(250px, auto));
@@ -80,7 +87,7 @@ const MainBoard = styled.div`
 const HeadTitle = styled.div`
   width: 100%;
   height: 50px;
-  padding: 60px 16%;
+  padding: 60px 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,10 +147,12 @@ export default function Home() {
           <NewsSub></NewsSub>
         </MainNews>
       </Content>
+      <ContentHead>
       <HeadTitle>
         <HeadTitleText>Board</HeadTitleText>
         <HeadTitleMore>more &rsaquo;</HeadTitleMore>
       </HeadTitle>
+      </ContentHead>
       <Content>
         <MainBoard>
           <BoardSNS></BoardSNS>
