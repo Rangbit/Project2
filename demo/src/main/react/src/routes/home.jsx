@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Footer from '../components/footer';
 import { NewsHead, NewsSub, Newslist } from '../components/news';
 import BoardSNS from '../components/board-sns';
+import WordcloudResult from '../components/wordcloud';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -146,6 +147,10 @@ export default function Home() {
           <NewsSub></NewsSub>
           <NewsSub></NewsSub>
         </MainNews>
+      </Content>
+
+      <Content>
+        <WordcloudResult></WordcloudResult>
       </Content>
       <ContentHead>
       <HeadTitle>
