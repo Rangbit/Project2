@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import searchLogo from "../assets/search-logo.svg";
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 110px;
+    height: 120px;
     background-color: rgba(255,255,255,0.1);
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ const WrapperTop = styled.div`
 
 const WrapperBottom = styled.div`
     width: 100%;
-    height: 30px;
+    height: 40px;
     max-width: 1400px;
     padding: 0 50px;
     display: flex;
@@ -45,6 +45,7 @@ const Title = styled.div`
     align-items: center;
     font-size: 32px;
     font-weight: 600;
+    cursor: pointer;
 `;
 
 const LoginBox = styled.div`
@@ -57,18 +58,23 @@ const LoginBox = styled.div`
 
 const UserButton = styled.div`
     width: 100px;
-    height: 30px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    &:hover {
+    background: #F0BE4D;
+    color: white;
+    transition: 0.5s;
+  }
 `;
 
 const MenuBox = styled.div`
     width: 100%;
     max-width: 1100px;
-    height: 30px;
-    padding-right: 20px;
+    height: 40px;
+    padding-right: 50px;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -78,11 +84,25 @@ const MenuItem = styled.div`
     width: 25%;
     max-width: 200px;
     min-width: 100px;
-    height: 30px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: aqua;
+    cursor: pointer;
+    color: ${(props) => props.color || "#000000"};
+    background-color: ${(props) => props.background || "#ffffff"};
+    &:hover {
+    background: #F0BE4D;
+    color: white;
+    transition: 0.5s;
+    }
+    ${(props) => 
+        props.onPage && 
+        css`
+            background: #F0BE4D;
+            color: white;
+        `
+    }
 `;
 
 const InputBox = styled.form`
@@ -102,142 +122,33 @@ const InputItem = styled.input`
     align-items: center;
     justify-content: center;
     border: 1px solid #999999;
-`;
-
-// const Menu = styled.div`
-//     width: 70%;
-//     height: 90px;
-//     display: flex;
-//     align-items: center;
-// `;
-
-// const UserMenu = styled.div`
-//     width: 100%;
-//     max-width: 1200px;
-//     height: 20px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     padding-right: 150px;
-// `;
-
-// const ContentMenu = styled.div`
-//     width: 100%;
-//     max-width: 1200px;
-//     height: 70px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 10px;
-//     padding: 0 50px;
-//     `;
-
-// const SubMenu = styled.div`
-//     width: 20%;
-//     height: 90px;
-//     `;
-
-// const LoginButton = styled.div`
-//         width: 100px;
-//         height: 30px;
-//         padding: 2px 20px;
-//         margin-top: 8px;
-//         color: black;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         font-size: 14px;
-//         cursor: pointer;
-//     `;
-
-// const Logo = styled.div`
-//     width: 10%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding: 0 50px;
-// `;
-
-// const MainLogo = styled.img`
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 120px;
-//     height: 60px;
-// `;
-
-// const NewsCategori = styled.div`
-//     width: 70%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: left;
-//     gap: 20px;
-// `;
-
-// const MenuItem = styled.div`
-//     width: 300%;
-//     max-width: 200px;
-//     min-width: 100px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     color: black;
-//     white-space: nowrap;
-//     cursor: pointer;
-// `;
-
-const SearchForm = styled.form`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding-right: 150px;
-    padding-top: 10px;
-`;
-
-const SearchInput = styled.input`
-    width: 200px;
-    height: 20px;
-    border-radius: 5px;
-    border: 1px solid #999999;
-`;
-
-const SearchLogo = styled.img`
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    &:focus{
+        border: 1px solid #F0BE4D;
+    }
 `;
 
 
-export default function Header() {
+export default function Header({...props}) {
 
     return (
         <Wrapper>
             <WrapperTop>
                 <Title>News Summary</Title>
                 <LoginBox>
-                    <UserButton>Log In</UserButton>
-                    <UserButton>Sign Up</UserButton>
+                    <UserButton>로그인</UserButton>
+                    <UserButton>회원가입</UserButton>
                 </LoginBox>
             </WrapperTop>
             <WrapperBottom>
                 <MenuBox>
-                    <MenuItem>News</MenuItem>
-                    <MenuItem>Category</MenuItem>
-                    <MenuItem>Board</MenuItem>
-                    <MenuItem>Mypage</MenuItem>
+                    <MenuItem {...props} onPage>메인화면</MenuItem>
+                    <MenuItem>일간뉴스</MenuItem>
+                    <MenuItem>카테고리</MenuItem>
+                    <MenuItem>커뮤니티</MenuItem>
                 </MenuBox>
                 <InputBox>
                     <InputItem />
                 </InputBox>
-                {/* <SearchForm>
-                    <SearchInput />
-                    <SearchLogo src={searchLogo}></SearchLogo>
-                </SearchForm> */}
             </WrapperBottom>
         </Wrapper>
     )

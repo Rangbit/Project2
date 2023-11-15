@@ -6,110 +6,123 @@ import Footer from '../components/footer';
 import { NewsHead, NewsSub, Newslist } from '../components/news';
 import BoardSNS from '../components/board-sns';
 import WordcloudResult from '../components/wordcloud';
+import { Entertainments, Positive } from '../components/category-badge';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  padding-top: 180px;
+  padding-top: 220px;
   gap: 50px;
   `;
 
+const WrapperBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Content = styled.div`
   width: 100%;
-  padding: 0 15%;
-  margin-bottom: 200px;
+  max-width: 1400px;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  gap: 100px;
-`;
+  gap: 200px;
+  `;
 
-const ContentHead = styled.div`
+const MainBox = styled.div`
   width: 100%;
-  padding: 0 15%;
-  display: flex;
-  justify-content: center;
-  gap: 100px;
-`;
-
-const Trend = styled.div`
-  width: 100%;
-  max-width: 1000px;
-  height: 30px;
-  margin-bottom: 50px;
+  max-width: 1400px;
+  height: 600px;
+  padding: 0 50px;
   display: flex;
   align-items: center;
-  padding: 0 30px;
-  color: white;
-  gap: 30px;
+  justify-content: center;
+  position: relative;
+`;
+
+const MainNewsImage = styled.div`
+  width: 100%;
+  max-width: 850px;
+  height: 600px;
+  background-image: url('https://cdn.spotvnews.co.kr/news/photo/202311/643707_950816_2934.jpg');
   position: absolute;
-  top: 120px;
-  white-space: nowrap;
+  right: 0;
 `;
 
-const TrendHeader = styled.div`
-  width: 120px;
-  height: 30px;
-  border-radius: 5px;
+const MainNewsBox = styled.div`
+  width: 100%;
+  max-width: 650px;
+  height: 100%;
+  max-height: 450px;
+  padding: 30px;
+  position: absolute;
+  left: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 5px 5px #99999944;
+`;
+
+const NewsBoxTop = styled.div`
+  width: 100%;
+  height: 25px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #FF0B0B;
-`;
-
-
-const TrendNews = styled.div`
-  color: black;
-`;
-
-const MainNews = styled.div`
-  width: 100%;
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(4, minmax(250px, auto));
-  grid-template-rows: repeat(4, minmax(50px, auto));
-  row-gap: 10px;
-  column-gap: 20px;
-  grid-template-areas: 
-    "main main main list"
-    "main main main list"
-    "main main main list"
-    "subs subs subs list";
-`;
-
-const MainBoard = styled.div`
-  width: 100%;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  /* background-color: aqua; */
-`;
-
-const HeadTitle = styled.div`
-  width: 100%;
-  height: 50px;
-  padding: 60px 10%;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 24px;
-  font-weight: 600;
 `;
 
-const HeadTitleText = styled.span`
+const TopText = styled.div`
+  width: 100%;
+  max-width: 370px;
+  height: 25px;
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
-const HeadTitleMore = styled.div`
-  padding: 4px 10px;
+const TopBadge = styled.div`
+  width: 100%;
+  width: 200px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+`;
+
+const TopMedia = styled.div`
+  width: auto;
+  height: 25px;
   font-size: 16px;
-  border: 1px solid #99999999;
-  border-radius: 10px;
+  color: #999999;
   display: flex;
   align-items: center;
-  justify-content: center;
+`;
+
+const TopDate = styled.div`
+  width: auto;
+  height: 25px;
+  font-size: 14px;
+  padding-left: 30px;
+  color: #999999;
+  display: flex;
+  align-items: center;
+`;
+  
+const MainNewsTitle = styled.div`
+  width: 100%;
+  max-width: 570px;
+  font-size: 32px;
+  margin: 20px 0;
+  `;
+
+const MainNewsContent = styled.div`
+  width: 100%;
+  max-width: 570px;
+  line-height: 1.8;
+`;
+
+const TrendBox = styled.div`
+  width: 100%;
+  max-width: 1400px;
 `;
 
 export default function Home() {
@@ -135,37 +148,33 @@ export default function Home() {
   return (
     <Wrapper>
       <Header></Header>
-      <Content>
-        <Trend>
-          <TrendHeader>Trend News</TrendHeader>
-          <TrendNews>연합뉴스 · 서울지하철 내일 오전 9시부터 파업 돌입…노사 교섭 결렬</TrendNews>
-        </Trend>
-        <MainNews>
-          <NewsHead></NewsHead>
-          <Newslist></Newslist>
-          <NewsSub></NewsSub>
-          <NewsSub></NewsSub>
-          <NewsSub></NewsSub>
-        </MainNews>
-      </Content>
+      <WrapperBox>
+        <Content>
+          <MainBox>
+            <MainNewsImage></MainNewsImage>
+            <MainNewsBox>
+              <NewsBoxTop>
+                <TopText>
+                  <TopMedia>SPOTVNEWS</TopMedia>
+                  <TopDate>2023.11.14 15:34</TopDate>
+                </TopText>
+                <TopBadge>
+                  <Entertainments></Entertainments>
+                  <Positive></Positive>
+                </TopBadge>
+              </NewsBoxTop>
+              <MainNewsTitle>곽튜브, 1000만원 걸고 빠니보틀 찾는다…'나는 솔로' 찍은 사연('서치미')</MainNewsTitle>
+              <MainNewsContent>
+                16일 방송되는 U+모바일tv, KBS2 '서치미'에서는 곽튜브가 자신의 '찐친'인 여행 크리에이터 빠니보틀(박재한) 찾기에 도전한다.<br /><br />
 
-      <Content>
-        <WordcloudResult></WordcloudResult>
-      </Content>
-      <ContentHead>
-      <HeadTitle>
-        <HeadTitleText>Board</HeadTitleText>
-        <HeadTitleMore>more &rsaquo;</HeadTitleMore>
-      </HeadTitle>
-      </ContentHead>
-      <Content>
-        <MainBoard>
-          <BoardSNS></BoardSNS>
-          <BoardSNS></BoardSNS>
-          <BoardSNS></BoardSNS>
-          <BoardSNS></BoardSNS>
-        </MainBoard>
-      </Content>
+                MC 전현무는 곽튜브에게 전화로 "5명의 빠니보틀이 있다. 이 중 1명만이 진짜 빠니보틀"이라고 룰을 설명한다. 곽튜브가 진짜 빠니보틀을 찾아내면 1000만 원은 곽튜브의 것이 된다.<br /><br />
+
+                곽튜브를 속이기 위해 두 사람의 또 다른 지인 채코제(박재일)와 '시치미단' 이은지, 곽범, 손동표가 나선다.<br /><br />
+              </MainNewsContent>
+            </MainNewsBox>
+          </MainBox>
+        </Content>
+      </WrapperBox>
       <Footer></Footer>
     </Wrapper>
   )

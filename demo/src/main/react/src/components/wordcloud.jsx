@@ -23,7 +23,7 @@ function WordcloudResult() {
             const fontSize = Math.min(40, Math.max(10, 10 + d.value / 5));
             return { text: d.word, size: fontSize, test: "haha" };
         }))
-        .padding(5)
+        .padding(20)
         .rotate(function () { return 0; })
         .font("Impact")
         .fontSize(function (d) { return d.size; });
@@ -51,6 +51,7 @@ function WordcloudResult() {
                 .attr("width", width)
                 .attr("height", height)
                 .style("border", "1px solid #00000099")
+                .style("margin", "0 50px")
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                 .selectAll("text")
