@@ -5,7 +5,7 @@ import searchLogo from "../assets/search-logo.svg";
 const Wrapper = styled.div`
     width: 100%;
     height: 120px;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255,255,255,0.9);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,7 +90,7 @@ const MenuItem = styled.div`
     justify-content: center;
     cursor: pointer;
     color: ${(props) => props.color || "#000000"};
-    background-color: ${(props) => props.background || "#ffffff"};
+    background-color: ${(props) => props.background || "#ffffff00"};
     &:hover {
     background: #F0BE4D;
     color: white;

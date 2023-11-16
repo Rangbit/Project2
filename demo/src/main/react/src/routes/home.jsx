@@ -3,10 +3,11 @@ import Header from "../components/header"
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../components/footer';
-import { NewsHead, NewsSub, Newslist } from '../components/news';
-import BoardSNS from '../components/board-sns';
 import WordcloudResult from '../components/wordcloud';
+import ArrowLeft from '../assets/arrow-left-circle.svg';
+import ArrowRight from '../assets/arrow-right-circle.svg';
 import { Entertainments, Positive } from '../components/category-badge';
+import { BoardMain } from '../components/board-sns';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,19 +17,21 @@ const Wrapper = styled.div`
   `;
 
 const WrapperBox = styled.div`
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 200px;
+  padding-bottom: 200px;
 `;
 
 const Content = styled.div`
   width: 100%;
   max-width: 1400px;
-  height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
-  gap: 200px;
   `;
 
 const MainBox = styled.div`
@@ -86,6 +89,7 @@ const TopBadge = styled.div`
   height: 25px;
   display: flex;
   align-items: center;
+  justify-content: right;
 `;
 
 const TopMedia = styled.div`
@@ -123,6 +127,115 @@ const MainNewsContent = styled.div`
 const TrendBox = styled.div`
   width: 100%;
   max-width: 1400px;
+  height: 1000px;
+  padding-top: 150px;
+  display: flex;
+  background-color: #E7AA22;
+  position: relative;
+`;
+
+const TrendBoxHead = styled.div`
+  width: 100%;
+  height: 150px;
+  padding: 30px 50px;
+  background-color: #F0BE4D;
+  position: absolute;
+  top: 0;
+`;
+
+const TrendHeadText = styled.div`
+  color: #ffffff;
+  font-size: 32px;
+`;
+
+const TrendHeadBtn = styled.div`
+  width: 130px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+  padding-left: 150px;
+  gap: 20px;
+`;
+
+const ArrowButton = styled.img`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+`;
+
+const TrendNewsBox = styled.div`
+  width: 1000px;
+  height: 150px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 2px 2px #99999944;
+  border-radius: 5px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+`;
+
+const WordCloudBox = styled.div`
+  width: 800px;
+  height: 850px;
+  padding: 150px 0 100px 0;
+`;
+
+const GraphBox = styled.div`
+  width: 600px;
+  height: 850px;
+  padding: 100px 50px 100px 50px;
+`;
+
+const GraphHeader = styled.div`
+  width: 500px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const GraphContent = styled.div`
+  width: 500px;
+  height: 550px;
+  padding-top: 50px;
+  background-color: aqua;
+`;
+
+const GraphTextBox = styled.div`
+  width: 60%;
+  height: 100px;
+  text-align: right;
+`;
+
+const GraphTitle = styled.div`
+  padding-bottom: 20px;
+  font-size: 36px;
+  color: #ffffff;
+`;
+
+const GraphText = styled.div`
+  font-size: 24px;
+  color: #ffffff;
+`;
+
+const GraphBtn = styled.div`
+  width: 40%;
+  height: 100px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 20px;
+`;
+
+const BoardBox = styled.div`
+  width: 100%;
+  height: 1220px;
+  padding: 0 50px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 50px;
 `;
 
 export default function Home() {
@@ -160,7 +273,6 @@ export default function Home() {
                 </TopText>
                 <TopBadge>
                   <Entertainments></Entertainments>
-                  <Positive></Positive>
                 </TopBadge>
               </NewsBoxTop>
               <MainNewsTitle>곽튜브, 1000만원 걸고 빠니보틀 찾는다…'나는 솔로' 찍은 사연('서치미')</MainNewsTitle>
@@ -173,6 +285,39 @@ export default function Home() {
               </MainNewsContent>
             </MainNewsBox>
           </MainBox>
+        </Content>
+        <Content>
+          <TrendBox>
+            <TrendBoxHead>
+              <TrendHeadText>인기뉴스</TrendHeadText>
+              <TrendHeadBtn>
+                <ArrowButton src={ArrowLeft} />
+                <ArrowButton src={ArrowRight} />
+              </TrendHeadBtn>
+            </TrendBoxHead>
+            <TrendNewsBox></TrendNewsBox>
+            <WordCloudBox>
+              <WordcloudResult></WordcloudResult>
+            </WordCloudBox>
+            <GraphBox>
+              <GraphHeader>
+                <GraphBtn>
+                  <ArrowButton src={ArrowLeft} />
+                  <ArrowButton src={ArrowRight} />
+                </GraphBtn>
+                <GraphTextBox>
+                  <GraphTitle>오늘의 트렌드</GraphTitle>
+                  <GraphText>연예 트렌드</GraphText>
+                </GraphTextBox>
+              </GraphHeader>
+              <GraphContent>Bar Graph</GraphContent>
+            </GraphBox>
+          </TrendBox>
+        </Content>
+        <Content>
+          <BoardBox>
+            <BoardMain></BoardMain>
+          </BoardBox>
         </Content>
       </WrapperBox>
       <Footer></Footer>

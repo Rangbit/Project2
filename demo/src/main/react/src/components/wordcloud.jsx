@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
-const width = 1200;
-const height = 500;
+const width = 700;
+const height = 600;
 
 function WordcloudResult() {
     const data = [
