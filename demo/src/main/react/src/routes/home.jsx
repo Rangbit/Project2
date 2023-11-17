@@ -6,8 +6,9 @@ import Footer from '../components/footer';
 import WordcloudResult from '../components/wordcloud';
 import ArrowLeft from '../assets/arrow-left-circle.svg';
 import ArrowRight from '../assets/arrow-right-circle.svg';
-import { Entertainments, Positive } from '../components/category-badge';
+import { Entertainments } from '../components/category-badge';
 import { BoardMain } from '../components/board-sns';
+import MyBarChart from '../components/bar-chart';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -110,7 +111,7 @@ const TopDate = styled.div`
   display: flex;
   align-items: center;
 `;
-  
+
 const MainNewsTitle = styled.div`
   width: 100%;
   max-width: 570px;
@@ -167,6 +168,7 @@ const ArrowButton = styled.img`
 const TrendNewsBox = styled.div`
   width: 1000px;
   height: 150px;
+  padding: 20px 30px;
   background-color: #ffffff;
   box-shadow: 2px 2px 2px 2px #99999944;
   border-radius: 5px;
@@ -184,12 +186,13 @@ const WordCloudBox = styled.div`
 const GraphBox = styled.div`
   width: 600px;
   height: 850px;
-  padding: 100px 50px 100px 50px;
+  padding: 100px 50px 100px 0;
 `;
 
 const GraphHeader = styled.div`
   width: 500px;
   height: 100px;
+  padding-left: 80px;
   display: flex;
   justify-content: space-between;
 `;
@@ -198,7 +201,9 @@ const GraphContent = styled.div`
   width: 500px;
   height: 550px;
   padding-top: 50px;
-  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 const GraphTextBox = styled.div`
@@ -236,6 +241,166 @@ const BoardBox = styled.div`
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 50px;
+`;
+
+const MainBoxBottom = styled.div`
+  width: 100%;
+  height: 800px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const BottomSubList = styled.div`
+  width: 100%;
+  max-width: 500px;
+  height: 800px;
+  padding: 0 20px;
+`;
+
+const BottomSubNews = styled.div`
+  width: 100%;
+  max-width: 650px;
+  height: 800px;
+  padding: 0 20px;
+  position: relative;
+`;
+
+const BottomCategory = styled.div`
+  width: 100%;
+  max-width: 250px;
+  height: 800px;
+  padding: 80px 20px 0 20px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+`;
+
+const BottomListItem = styled.div`
+  width: 100%;
+  height: 100px;
+  padding-bottom: 10px;
+  margin: 30px 0;
+  border-bottom: 1px solid #99999944;
+  display: flex;
+  flex-direction: column;
+  &:last-child{
+    border: none;
+  }
+`;
+
+const NewsHeaderItem = styled.div`
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+  color: #999999;
+  gap: 30px;
+`;
+
+const NewsMediaText = styled.div`
+  font-size: 16px;
+`;
+
+const NewsDateText = styled.div`
+  font-size: 14px;
+`;
+
+const ListNewsTitle = styled.div`
+  width: 100%;
+  height: 60px;
+  padding-bottom: 20px;
+  font-size: 22px;
+  line-height: 1.3;
+  overflow: hidden;
+  position: relative;
+  white-space: normal;
+  word-wrap: break-word;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+
+const SubNewsImage = styled.img`
+  width: 100%;
+  height: 720px;
+  object-fit:cover;
+  box-shadow: 5px 5px 5px 5px #99999944;
+`;
+
+const SubNewsTextBox = styled.div`
+  width: 100%;
+  max-width: 700px;
+  height: 220px;
+  padding: 20px 30px;
+  position: absolute;
+  bottom: 0;
+  right: -150px;
+  box-shadow: 5px 5px 5px 5px #99999944;
+  background-color: #ffffff;
+`;
+
+const SubNewsTitle = styled.div`
+  width: 100%;
+  height: 145px;
+  font-size: 36px;
+  line-height: 1.3;
+  overflow: hidden;
+  position: relative;
+  white-space: normal;
+  word-wrap: break-word;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
+const TrendNewsTitle = styled.div`
+  width: 100%;
+  height: 85px;
+  font-size: 32px;
+  line-height: 1.3;
+  overflow: hidden;
+  position: relative;
+  white-space: normal;
+  word-wrap: break-word;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+
+const NewsMediaBottom = styled.div`
+  font-size: 22px;
+`;
+
+const NewsDateBottom = styled.div`
+  font-size: 18px;
+`;
+
+const BottomCategoryTitle = styled.div`
+  font-size: 40px;
+  padding-bottom: 30px;
+`;
+
+const BottomCategoryItem = styled.div`
+    width: 100%;
+    height: 40px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-size: 28px;
+    cursor: pointer;
+    &:hover {
+      /* background-image: linear-gradient(to left, #F0BE4D, #ffffff00); */
+      background: #F0BE4D;
+      color: white;
+      transition: 0.5s;
+  }
 `;
 
 export default function Home() {
@@ -295,7 +460,13 @@ export default function Home() {
                 <ArrowButton src={ArrowRight} />
               </TrendHeadBtn>
             </TrendBoxHead>
-            <TrendNewsBox></TrendNewsBox>
+            <TrendNewsBox>
+                <NewsHeaderItem>
+                    <NewsMediaBottom>아시아경제</NewsMediaBottom>
+                    <NewsDateBottom>2023.11.17 09:11</NewsDateBottom>
+                </NewsHeaderItem>
+                <TrendNewsTitle>"수건이 115만원? 우린 9900원"…발렌시아가 저격한 이케아"수건이 115만원? 우린 9900원"…발렌시아가 저격한 이케아이케아이케아이케아이케아이케아이케아이케아이케아이케아</TrendNewsTitle>
+            </TrendNewsBox>
             <WordCloudBox>
               <WordcloudResult></WordcloudResult>
             </WordCloudBox>
@@ -310,7 +481,9 @@ export default function Home() {
                   <GraphText>연예 트렌드</GraphText>
                 </GraphTextBox>
               </GraphHeader>
-              <GraphContent>Bar Graph</GraphContent>
+              <GraphContent>
+                <MyBarChart />
+              </GraphContent>
             </GraphBox>
           </TrendBox>
         </Content>
@@ -318,6 +491,75 @@ export default function Home() {
           <BoardBox>
             <BoardMain></BoardMain>
           </BoardBox>
+        </Content>
+        <Content>
+          <MainBoxBottom>
+            <BottomSubList>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>연합뉴스</NewsMediaText>
+                  <NewsDateText>2023.11.17 09:42</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>고양시 아파트 지하주차장 기둥 파손…차량 통제·긴급 보강작업(종합)</ListNewsTitle>
+              </BottomListItem>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>디지털데일리</NewsMediaText>
+                  <NewsDateText>2023.11.16 17:20</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>[현장] 매장서 입어보고 온라인 주문? ‘무신사 홍대’에선 바로 구매 OK 매장서 입어보고 온라인 주문? ‘무신사 홍대’에선 바로 구매 OK</ListNewsTitle>
+              </BottomListItem>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>연합뉴스</NewsMediaText>
+                  <NewsDateText>2023.11.17 09:42</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>고양시 아파트 지하주차장 기둥 파손…차량 통제·긴급 보강작업(종합)</ListNewsTitle>
+              </BottomListItem>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>연합뉴스</NewsMediaText>
+                  <NewsDateText>2023.11.17 09:42</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>고양시 아파트 지하주차장 기둥 파손…차량 통제·긴급 보강작업(종합)</ListNewsTitle>
+              </BottomListItem>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>연합뉴스</NewsMediaText>
+                  <NewsDateText>2023.11.17 09:42</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>고양시 아파트 지하주차장 기둥 파손…차량 통제·긴급 보강작업(종합)</ListNewsTitle>
+              </BottomListItem>
+              <BottomListItem>
+                <NewsHeaderItem>
+                  <NewsMediaText>연합뉴스</NewsMediaText>
+                  <NewsDateText>2023.11.17 09:42</NewsDateText>
+                </NewsHeaderItem>
+                <ListNewsTitle>고양시 아파트 지하주차장 기둥 파손…차량 통제·긴급 보강작업(종합)</ListNewsTitle>
+              </BottomListItem>
+            </BottomSubList>
+            <BottomSubNews>
+              <SubNewsImage src="https://imgnews.pstatic.net/image/277/2023/11/17/0005342242_001_20231117092303634.jpg?type=w647" />
+              <SubNewsTextBox>
+                <NewsHeaderItem>
+                    <NewsMediaBottom>아시아경제</NewsMediaBottom>
+                    <NewsDateBottom>2023.11.17 09:11</NewsDateBottom>
+                </NewsHeaderItem>
+                <SubNewsTitle>"수건이 115만원? 우린 9900원"…발렌시아가 저격한 이케아"수건이 115만원? 우린 9900원"…발렌시아가 저격한 이케아</SubNewsTitle>
+              </SubNewsTextBox>
+            </BottomSubNews>
+            <BottomCategory>
+              <BottomCategoryTitle>카테고리</BottomCategoryTitle>
+              <BottomCategoryItem>사회</BottomCategoryItem>
+              <BottomCategoryItem>정치</BottomCategoryItem>
+              <BottomCategoryItem>경제</BottomCategoryItem>
+              <BottomCategoryItem>국제</BottomCategoryItem>
+              <BottomCategoryItem>문화</BottomCategoryItem>
+              <BottomCategoryItem>IT</BottomCategoryItem>
+              <BottomCategoryItem>연예</BottomCategoryItem>
+              <BottomCategoryItem>스포츠</BottomCategoryItem>
+            </BottomCategory>
+          </MainBoxBottom>
         </Content>
       </WrapperBox>
       <Footer></Footer>

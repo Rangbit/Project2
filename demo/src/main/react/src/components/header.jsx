@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components"
-import searchLogo from "../assets/search-logo.svg";
 
 const Wrapper = styled.div`
     width: 100%;
     height: 120px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,8 +95,8 @@ const MenuItem = styled.div`
     color: white;
     transition: 0.5s;
     }
-    ${(props) => 
-        props.onPage && 
+    ${(props) =>
+        props.onPage &&
         css`
             background: #F0BE4D;
             color: white;
@@ -128,15 +127,21 @@ const InputItem = styled.input`
 `;
 
 
-export default function Header({...props}) {
+export default function Header({ ...props }) {
 
     return (
         <Wrapper>
             <WrapperTop>
-                <Title>News Summary</Title>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                    <Title>News Summary</Title>
+                </Link>
                 <LoginBox>
-                    <UserButton>로그인</UserButton>
-                    <UserButton>회원가입</UserButton>
+                    <Link to="/login" style={{ textDecoration: "none" }}>
+                        <UserButton>로그인</UserButton>
+                    </Link>
+                    <Link to="/create-account" style={{ textDecoration: "none" }}>
+                        <UserButton>회원가입</UserButton>
+                    </Link>
                 </LoginBox>
             </WrapperTop>
             <WrapperBottom>

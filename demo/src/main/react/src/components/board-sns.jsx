@@ -25,22 +25,35 @@ const ItemTextBox = styled.div`
 
 const TextDate = styled.div`
     color: #999999;
-    padding-bottom: 20px;
 `;
 
 const TextContent = styled.div`
-    padding: 0 10px;
+    width: 100%;
+    height: 105px;
+    padding: 10px 10px 0 10px;
     font-size: 20px;
+    line-height: 1.2;
+    overflow: hidden;
+    position: relative;
+    white-space: normal;
+    word-wrap: break-word;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 `;
 
-const TextUrl = styled.a`
-    width: 90%;
-    height: 30px;
-    margin: 15px 10px;
+const TextUrl = styled.div`
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    padding: 0 10px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #99999999;
+    cursor: pointer;
 `;
 
 const LikeBox = styled.div`
@@ -51,7 +64,7 @@ const LikeBox = styled.div`
     align-items: center;
     justify-content: right;
     position: absolute;
-    bottom: 90px;
+    bottom: 70px;
     gap: 10px;
 `;
 
@@ -86,6 +99,8 @@ const UserBoxImage = styled.img`
 const UserBoxName = styled.div`
     font-size: 22px;
 `
+
+const CategoryBox = styled.div``;
 
 export function BoardSNS() {
     // return (
@@ -129,7 +144,9 @@ export function BoardMain() {
                     {imageUrl[index] && <ItemImage src={imageUrl[index]} />}
                     <ItemTextBox>
                         <TextDate>2023.11.16 16:06</TextDate>
-                        <TextContent>사용자가 작성한 게시판 글이 여기에 나올 예정입니다......................................</TextContent>
+                        <TextContent>
+                            사용자가 작성한 게시판 글이 여기에 나올 예정입니다 AAAAABABABABABBABABABBABABABABVAAVAVAVA 사용자가 작성한 게시판 글이 여기에 나올 예정입니다
+                        </TextContent>
                         <TextUrl>https://www.naver.com/</TextUrl>
                         <LikeBox>
                             <Comments src={Comment} /> 10

@@ -20,7 +20,8 @@ function WordcloudResult() {
         .size([width, height])
         .words(data.map(function (d) {
             // 최소 크기 10, 최대 크기 40으로 조정
-            const fontSize = Math.min(40, Math.max(10, 10 + d.value / 5));
+            // const fontSize = Math.min(40, Math.max(10, 10 + d.value / 5));
+            const fontSize = 10 + d.value / 5;
             return { text: d.word, size: fontSize, test: "haha" };
         }))
         .padding(20)
@@ -57,7 +58,6 @@ function WordcloudResult() {
                 .selectAll("text")
                 .data(words)
                 .enter().append("text")
-                // .style("fill", fontColor())
                 .style("fill", function () {
                     // 랜덤 RGB 값 생성
                     const randomColor = () => Math.floor(Math.random() * 256);
@@ -74,9 +74,9 @@ function WordcloudResult() {
     }, []);
 
     return (
-        <div>
+        <>
             <div id="word-cloud"></div>
-        </div>
+        </>
     )
 }
 
