@@ -51,7 +51,7 @@ const LoginBox = styled.div`
     width: 300px;
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
 `;
 
@@ -132,16 +132,16 @@ export default function Header({ ...props }) {
     return (
         <Wrapper>
             <WrapperTop>
-                <Link to="/" style={{ textDecoration: "none" }}>
+                <Link to="/" style={{ textDecoration: "none", color: "black" }}>
                     <Title>News Summary</Title>
                 </Link>
                 <LoginBox>
-                    <Link to="/login" style={{ textDecoration: "none" }}>
+                    <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
                         <UserButton>로그인</UserButton>
                     </Link>
-                    <Link to="/create-account" style={{ textDecoration: "none" }}>
+                    {/* <Link to="/create-account" style={{ textDecoration: "none", color: "black" }}>
                         <UserButton>회원가입</UserButton>
-                    </Link>
+                    </Link> */}
                 </LoginBox>
             </WrapperTop>
             <WrapperBottom>

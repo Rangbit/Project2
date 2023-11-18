@@ -38,6 +38,7 @@ const GithubBox = styled.a`
     gap: 20px;
     position: absolute;
     left: 200px;
+    text-decoration: none;
 `;
 
 const GithubText = styled.div`

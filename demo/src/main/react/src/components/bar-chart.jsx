@@ -15,7 +15,7 @@ const MyBarChart = () => {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Bar dataKey="value" fill="#AEECFF" />
+      <Bar dataKey="value" fill="#664369" />
     </BarChart>
   );
 }

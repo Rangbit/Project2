@@ -166,15 +166,17 @@ const ArrowButton = styled.img`
 `;
 
 const TrendNewsBox = styled.div`
-  width: 1000px;
+  width: 100%;
+  max-width: 1000px;
   height: 150px;
   padding: 20px 30px;
+  box-sizing: border-box;
   background-color: #ffffff;
   box-shadow: 2px 2px 2px 2px #99999944;
   border-radius: 5px;
   position: absolute;
   top: 50px;
-  right: 50px;
+  left: 350px;
 `;
 
 const WordCloudBox = styled.div`
@@ -360,8 +362,9 @@ const SubNewsTitle = styled.div`
 
 const TrendNewsTitle = styled.div`
   width: 100%;
-  height: 85px;
-  font-size: 32px;
+  height: 75px;
+  padding-top: 5px;
+  font-size: 28px;
   line-height: 1.3;
   overflow: hidden;
   position: relative;
