@@ -5,54 +5,61 @@ import styled from 'styled-components';
 import Footer from '../components/footer';
 
 const Wrapper = styled.div`
-width: 100%;
-  display: grid;
+  width: 100%;
+  height: 100vh;
+  padding-top: 120px;
   gap: 50px;
-  overflow-y: auto;
-  grid-template-rows: 1fr 1fr;
+`;
+
+const WrapperBox = styled.div`
+  width: 100%;
+  max-width: 1400px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 200px;
+  padding: 100px 50px 200px 50px;
+  /* padding-bottom: 200px; */
+  margin: auto;
+  `;
+
+const LeftMenu = styled.div`
+    width: 100%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: aqua;
   `;
 
 const Content = styled.div`
   width: 100%;
-  min-height: 1200px;
-  padding: 120px 15% 0 15%;
-  background-color: gray;
-`;
-
-const Trend = styled.div`
-  height: 30px;
-  margin-bottom: 50px;
+  max-width: 1000px;
+  height: auto;
   display: flex;
-  align-items: center;
-  padding: 0 30px;
-  color: white;
-  background-color: aqua;
-  gap: 30px;
+  justify-content: center;
 `;
 
-const TrendHeader = styled.div`
-  width: 120px;
-  height: 30px;
-  border-radius: 5px;
+const SecessionBox = styled.div`
+  width: 100%;
+  max-width: 1000px;
+  height: 100px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+`;
+
+const SecessionBtn = styled.div`
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #99999944;
+  background-color: #fa4f4f;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FF0B0B;
 `;
-
-
-const TrendNews = styled.div`
-  color: black;
-`;
-
-const MainNews = styled.div`
-  width: 100%;
-  height: 500px;
-  padding: 20px;
-  border: 1px solid #999999;
-  border-radius: 10px;
-`;
-
 
 export default function Profile() {
   const [data, setData] = useState('');
@@ -77,21 +84,15 @@ export default function Profile() {
   return (
     <Wrapper>
       <Header></Header>
-      <Content>
-        <Trend>
-          <TrendHeader>TrendNews</TrendHeader>
-          <TrendNews>test news Title Here</TrendNews>
-        </Trend>
-        <MainNews>
-          <div>home test</div>
-          <div>받아온 값 : {data}</div>
-        </MainNews>
-        <MainNews>
-          <div>home test</div>
-          <div>받아온 값 : {data}</div>
-        </MainNews>
-      </Content>
-      <Footer></Footer>
+      <WrapperBox>
+        <LeftMenu></LeftMenu>
+        <Content>
+          <SecessionBox>
+            <SecessionBtn>회원탈퇴</SecessionBtn>
+          </SecessionBox>
+        </Content>
+      </WrapperBox>
+        <Footer></Footer>
     </Wrapper>
   )
 }

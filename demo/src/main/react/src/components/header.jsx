@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components";
+import '../components/font.css';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -45,6 +46,7 @@ const Title = styled.div`
     font-size: 32px;
     font-weight: 600;
     cursor: pointer;
+    font-family: 'Oswald', sans-serif;
 `;
 
 const LoginBox = styled.div`
@@ -136,12 +138,12 @@ export default function Header({ ...props }) {
                     <Title>News Summary</Title>
                 </Link>
                 <LoginBox>
+                    <Link to="/profile" style={{ textDecoration: "none", color: "black" }}>
+                        <UserButton>마이페이지</UserButton>
+                    </Link>
                     <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
                         <UserButton>로그인</UserButton>
                     </Link>
-                    {/* <Link to="/create-account" style={{ textDecoration: "none", color: "black" }}>
-                        <UserButton>회원가입</UserButton>
-                    </Link> */}
                 </LoginBox>
             </WrapperTop>
             <WrapperBottom>
