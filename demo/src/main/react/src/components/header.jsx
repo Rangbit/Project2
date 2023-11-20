@@ -53,7 +53,7 @@ const LoginBox = styled.div`
     width: 300px;
     height: 80px;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
 `;
 
