@@ -7,6 +7,7 @@ import DoughnutComponent from '../components/doughnut';
 import { LineComponent } from '../components/linechart';
 import UserDefault from '../assets/image/user-avatar.png';
 import Pencil from '../assets/pencil-logo.svg'
+import MypagePaging from '../components/pagination';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -300,6 +301,7 @@ export default function Profile() {
             </BookMarkTextBox>
             <BookMarkImageBox src='https://imgnews.pstatic.net/image/056/2023/11/20/0011605744_001_20231120153305436.jpg?type=w647' />
           </BookMarkBox>
+          <MypagePaging />
         </Content>
         {/* 포인트 획득내역 */}
         <Content className={`content3 ${onMenu === 'content3' ? 'active' : ''}`} active={onMenu === 'content3'}>

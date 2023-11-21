@@ -82,7 +82,7 @@ const MenuBox = styled.div`
 `;
 
 const MenuItem = styled.div`
-    width: 25%;
+    width: 100%;
     max-width: 200px;
     min-width: 100px;
     height: 40px;
@@ -148,10 +148,18 @@ export default function Header({ ...props }) {
             </WrapperTop>
             <WrapperBottom>
                 <MenuBox>
-                    <MenuItem {...props} onPage>메인화면</MenuItem>
-                    <MenuItem>일간뉴스</MenuItem>
-                    <MenuItem>카테고리</MenuItem>
-                    <MenuItem>커뮤니티</MenuItem>
+                    <Link to="/" style={{ textDecoration: "none", color: "black" , width: "20%" }}>
+                        <MenuItem {...props} onPage>메인화면</MenuItem>
+                    </Link>
+                    <Link to="/daily-news" style={{ textDecoration: "none", color: "black" , width: "20%" }}>
+                        <MenuItem>일간뉴스</MenuItem>
+                    </Link>
+                    <Link to="/category-news" style={{ textDecoration: "none", color: "black" , width: "20%" }}>
+                        <MenuItem>카테고리</MenuItem>
+                    </Link>
+                    <Link to="/board" style={{ textDecoration: "none", color: "black" , width: "20%" }}>
+                        <MenuItem>커뮤니티</MenuItem>
+                    </Link>
                 </MenuBox>
                 <InputBox>
                     <InputItem />
