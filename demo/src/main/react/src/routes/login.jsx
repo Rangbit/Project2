@@ -303,9 +303,11 @@ export default function Login() {
               <SocialButtonGoogle>
                 <SocialButtonImage src={Google} />
               </SocialButtonGoogle>
+              <a href='https://kauth.kakao.com/oauth/authorize?client_id=a5336752ae75dfa19b52019c374a13c6&redirect_uri=http://localhost:8081/member/kakao&response_type=code'>
               <SocialButtonKakao>
                 <SocialButtonImage src={Kakao} />
               </SocialButtonKakao>
+              </a>
               <SocialButtonNaver>
                 <SocialButtonImage src={Naver} />
               </SocialButtonNaver>
