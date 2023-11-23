@@ -70,7 +70,7 @@ const MainDailyBox = styled.div`
     padding: 30px 40px;
     gap: 40px;
     margin-bottom: 100px;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -86,8 +86,6 @@ const MainDailyNews = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    border: 1px solid #99999944;
-    box-shadow: 5px 5px 5px 2px #99999944;
     &.dailynews-box1:hover {
         z-index: 100;
         .dailynews-area1 {
@@ -117,8 +115,10 @@ const MainDailyNews = styled.div`
     }
     &.dailynews-box4:hover {
         z-index: 100;
-        transform: translateX(calc(-300% - 120px));
-        transition: 0.9s;
+        .dailynews-imagebox4{
+            transform: translateX(calc(-300% - 120px));
+            transition: 0.9s;
+        }
         .dailynews-area4 {
             transform: translateY(0);
             transition: 0.8s;
@@ -859,7 +859,7 @@ export function HomeMainNews() {
                     </MainDailyTextArea>
                 </MainDailyNews>
                 <MainDailyNews className='dailynews-box4'>
-                    <MainDailyIamgeBox>
+                    <MainDailyIamgeBox className='dailynews-imagebox4'>
                         <MainDailyImage className='dailynews-img4' src='https://imgnews.pstatic.net/image/009/2023/11/21/0005218104_001_20231121135401025.png?type=w647' />
                     </MainDailyIamgeBox>
                     <MainDailyTextArea className='dailynews-area4'>
