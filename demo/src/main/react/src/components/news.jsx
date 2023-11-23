@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled, { css, keyframes } from 'styled-components';
 import WordcloudResult from '../components/wordcloud';
+import AutoPlayCarousel from '../components/carousel';
 import ArrowLeft from '../assets/arrow-left-circle.svg';
 import ArrowRight from '../assets/arrow-right-circle.svg';
-import { CategoryBadgeBox } from '../components/category-badge';
 import MyBarChart from '../components/bar-chart';
 import Bookmark from '../assets/bookmark.svg';
 import BookmarkOn from '../assets/bookmark-on.svg';
@@ -19,42 +19,65 @@ const Main = styled.div`
 
 const MainHeader = styled.div`
     width: 100%;
-    height: 50px;
-    font-size: 32px;
-    padding: 30px;
+    font-size: 28px;
+    padding: 30px 30px 0 30px;
     display: flex;
     align-items: center;
+    background-color: #ffffff;
 `;
 
+
+
+// -- Home Trend badge component -- //
+const MainTrendBox = styled.div`
+    width: 100%;
+    padding: 30px 40px;
+    gap: 20px 40px;
+    margin-bottom: 100px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 5px 2px #99999944;
+`;
+
+const MainTrendBadge = styled.div`
+    height: 36px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 1px solid #99999944;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
+    &:hover {
+        color: #ffffff;
+        background-color: #f0be4d;
+        border: 1px solid #99999900;
+        transition: 0.5s;
+    }
+`;
+
+
+
+// -- Home 1second news component -- //
 const MainDailyBox = styled.div`
     width: 100%;
     height: 320px;
-    padding: 20px 40px;
+    padding: 30px 40px;
     gap: 40px;
+    margin-bottom: 100px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     background-color: #ffffff;
-    border: 1px solid #99999944;
     box-shadow: 5px 5px 5px 2px #99999944;
 `;
-/*
-const DailyHoverAni = keyframes`
-  0% {}
-  20% {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  0% {}
-`;
-
-const DailyHoverStyles = css`
-    animation: ${DailyHoverAni} 1s ease-in-out;
-`;
-*/
 
 const MainDailyNews = styled.div`
     width: 100%;
@@ -67,11 +90,6 @@ const MainDailyNews = styled.div`
     box-shadow: 5px 5px 5px 2px #99999944;
     &.dailynews-box1:hover {
         z-index: 100;
-         /* &.dailynews-box1 ~ .dailynews-box2,
-         &.dailynews-box1 ~ .dailynews-box3,
-         &.dailynews-box1 ~ .dailynews-box4 {
-            display: none;
-        } */
         .dailynews-area1 {
             transform: translateY(0);
             transition: 0.8s;
@@ -124,7 +142,7 @@ const MainDailyTextArea = styled.div`
     height: 270px;
     position: absolute;
     left: 310px;
-    padding: 40px 20px;
+    padding: 20px 20px;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid #99999944;
@@ -146,14 +164,20 @@ const MainDailyContent = styled.div`
     line-height: 1.3;
 `;
 
+
+
+// -- Home Main news carousel component -- //
 const MainNewsBox = styled.div`
     width: 100%;
-    height: 300px;
+    height: 560px;
     gap: 30px;
+    padding: 30px 10px;
+    display: flex;
+    align-items: center;
     background-color: #ffffff;
-    border: 1px solid #99999944;
     box-shadow: 5px 5px 5px 2px #99999944;
 `;
+
 
 
 // -- Home Trend news component -- //
@@ -766,6 +790,7 @@ const PaginationBox = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1rem; 
+    background-color: #ffffff;
   }
   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
@@ -792,6 +817,17 @@ const CategoryData = [
 export function HomeMainNews() {
     return (
         <Main>
+            <MainHeader>오늘 뜨는 뉴스</MainHeader>
+            <MainTrendBox>
+                <MainTrendBadge>국정원 정찰위성 보고</MainTrendBadge>
+                <MainTrendBadge>조달청 전산망 먹통</MainTrendBadge>
+                <MainTrendBadge>네덜란드 총선</MainTrendBadge>
+                <MainTrendBadge>폴리코노미</MainTrendBadge>
+                <MainTrendBadge>슈링크플레이션 신고</MainTrendBadge>
+                <MainTrendBadge>친일파 부당이득 반환</MainTrendBadge>
+                <MainTrendBadge>초록낙엽</MainTrendBadge>
+                <MainTrendBadge>갤럭시 마르지엘라 에디션</MainTrendBadge>
+            </MainTrendBox>
             <MainHeader>1분뉴스</MainHeader>
             <MainDailyBox>
                 <MainDailyNews className='dailynews-box1'>
@@ -810,8 +846,7 @@ export function HomeMainNews() {
                     <MainDailyTextArea className='dailynews-area2'>
                         <MainDailyTitle>침 질질… 인간 무서워하지 않는 ‘좀비 사슴’ 미국서 확인</MainDailyTitle>
                         <MainDailyContent>침을 질질 흘리면서 사람을 무서워 하지 않는 일명 ‘좀비 사슴’ 질병 사례가 미국 대표 국립공원에서 최초로 확인됐다.
-
-                                            최근 뉴욕포스트·포브스 등 주요 외신이 보도한 내용에 따르면 미국 와이오밍주 북서부와 몬태나주 남부, 아이다호주 동부에 걸쳐 있는 세계 최초이자 미국을 대표하는 국립공원인 옐로스톤 국립공원에서 최근 사슴만성소모성질병(CWD)에 걸린 사슴이 처음으로 확인됐다.</MainDailyContent>
+                                          최근 뉴욕포스트·포브스 등 주요 외신이 보도한 내용에 따르면 미국 와이오밍주 북서부와 몬태나주 남부, 아이다호주 동부에 걸쳐 있는 세계 최초이자 미국을 대표하는 국립공원인 옐로스톤 국립공원에서 최근 사슴만성소모성질병(CWD)에 걸린 사슴이 처음으로 확인됐다.</MainDailyContent>
                     </MainDailyTextArea>
                 </MainDailyNews>
                 <MainDailyNews className='dailynews-box3'>
@@ -834,7 +869,9 @@ export function HomeMainNews() {
                 </MainDailyNews>
             </MainDailyBox>
             <MainHeader>오늘의 뉴스</MainHeader>
-            <MainNewsBox></MainNewsBox>
+            <MainNewsBox>
+                <AutoPlayCarousel />
+            </MainNewsBox>
         </Main>
     )
 }
