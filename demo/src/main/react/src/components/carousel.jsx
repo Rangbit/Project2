@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import range from 'lodash/range';
 import styled from 'styled-components';
 import ItemsCarousel from 'react-items-carousel';
+import { useNewsData } from './news-data';
 
 const noOfItems = 12;
 const noOfCards = 3;
@@ -93,40 +94,60 @@ const carouselItems = range(noOfItems).map(index => (
   </SlideItem>
 ));
 
-export default class AutoPlayCarousel extends React.Component {
-  state = {
-    activeItemIndex: 0,
+const AutoPlayCarousel = () => {
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(tick, autoPlayDelay);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeItemIndex]);
+
+  const tick = () => {
+    setActiveItemIndex((prevIndex) => (prevIndex + 1) % (noOfItems - noOfCards + 1));
   };
 
-  componentDidMount() {
-    this.interval = setInterval(this.tick, autoPlayDelay);
+  const onChange = (value) => {
+    setActiveItemIndex(value);
+  };
+
+
+  if (isLoading) {
+    // 로딩 중에 대한 처리
+    return <div>Loading...</div>;
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  // useNewsData 훅을 사용하여 컨텍스트 데이터를 가져옴
+  const newsData = useNewsData();
+  console.log(newsData);
+  // 가져온 데이터를 사용하여 UI를 렌더링
+  const carouselItems = newsData.map((index, item) => (
+      <SlideItem key={index}>
+          <NewsImageBox>
+              <NewsImage src={item.Image} /> {/* Assuming the news data has an 'imageUrl' property */}
+          </NewsImageBox>
+          <NewsTitle>{item.Title}</NewsTitle>
+          <NewsContent>{item.Content}</NewsContent>
+      </SlideItem>
+  ));
 
-  tick = () => this.setState(prevState => ({
-    activeItemIndex: (prevState.activeItemIndex + 1) % (noOfItems-noOfCards + 1),
-  }));
+  return (
+    <Wrapper>
+      <ItemsCarousel
+        gutter={12}
+        numberOfCards={noOfCards}
+        activeItemIndex={activeItemIndex}
+        requestToChangeActive={onChange}
+        rightChevron={<CarouselButton>{'>'}</CarouselButton>}
+        leftChevron={<CarouselButton>{'<'}</CarouselButton>}
+        chevronWidth={chevronWidth}
+        outsideChevron
+        children={carouselItems}
+      />
+    </Wrapper>
+  );
+};
 
-  onChange = value => this.setState({ activeItemIndex: value });
-
-  render() {
-    return (
-      <Wrapper>
-        <ItemsCarousel
-          gutter={12}
-          numberOfCards={noOfCards}
-          activeItemIndex={this.state.activeItemIndex}
-          requestToChangeActive={this.onChange}
-          rightChevron={<CarouselButton>{'>'}</CarouselButton>}
-          leftChevron={<CarouselButton>{'<'}</CarouselButton>}
-          chevronWidth={chevronWidth}
-          outsideChevron
-          children={carouselItems}
-        />
-      </Wrapper>
-    );
-  }
-}
+export default AutoPlayCarousel;
