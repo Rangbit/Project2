@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled, { css, keyframes } from 'styled-components';
 import WordcloudResult from '../components/wordcloud';
-import AutoPlayCarousel from '../components/carousel';
+import AutoPlayCarousel, { ViewsCarousel } from '../components/carousel';
 import ArrowLeft from '../assets/arrow-left-circle.svg';
 import ArrowRight from '../assets/arrow-right-circle.svg';
 import MyBarChart from '../components/bar-chart';
 import Bookmark from '../assets/bookmark.svg';
 import BookmarkOn from '../assets/bookmark-on.svg';
 import Pagination from "react-js-pagination";
+import { AutoComponent } from '../data/news-data';
 
 // -- Home Main news component -- //
 const Main = styled.div`
@@ -190,7 +191,7 @@ const MainNewsBox = styled.div`
 // -- Home Main category news carousel component -- //
 const MainCategoryNewsBox = styled.div`
     width: 100%;
-    height: 360px;
+    height: 400px;
     gap: 30px;
     padding: 30px 10px;
     display: flex;
@@ -895,11 +896,13 @@ export function HomeMainNews() {
             </MainDailyBox>
             <MainHeader>오늘의 뉴스</MainHeader>
             <MainNewsBox>
-                <AutoPlayCarousel />
+                <AutoComponent>
+                    <AutoPlayCarousel />
+                </AutoComponent>
             </MainNewsBox>
-            <MainHeader>이런 뉴스는 어때요?</MainHeader>
+            <MainHeader>사람들이 많이 본 뉴스</MainHeader>
             <MainCategoryNewsBox>
-
+                <ViewsCarousel />
             </MainCategoryNewsBox>
         </Main>
     )
