@@ -14,7 +14,6 @@ import { useNewsContext, useNewsViewContext } from '../data/news-data.context';
 // -- Home Main news component -- //
 const Main = styled.div`
   width: 100%;
-  padding: 0px 0 150px 0;
 `;
 
 const MainHeader = styled.div`
@@ -44,7 +43,7 @@ const MainTrendBox = styled.div`
     width: 100%;
     padding: 30px 140px;
     gap: 20px 30px;
-    margin-bottom: 100px;
+    /* margin-bottom: 100px; */
     display: flex;
     align-items: center;
     position: relative;
@@ -115,7 +114,7 @@ const MainCardHeader = styled.div`
 `;
 
 const MainCardNews = styled.div`
-   width: ${(props) => (props.isFirst ? '440px' : '360px')};
+   width: ${(props) => (props.isFirst ? '440px' : '320px')};
    height: ${(props) => (props.isFirst ? '560px' : '440px')};
   perspective: 1100px;
   display: flex;
@@ -127,7 +126,7 @@ const MainCardNews = styled.div`
   `;
 
 const MainCardImageBox = styled.div`
-   width: ${(props) => (props.isFirst ? '440px' : '360px')};
+   width: ${(props) => (props.isFirst ? '440px' : '320px')};
    height: ${(props) => (props.isFirst ? '560px' : '440px')};
    border: 1px solid #999999;
   border-radius: 30px;
@@ -142,6 +141,10 @@ const MainCardImage = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  &:hover{
+    transition: .5s;
+    height: 110%;
+  }
   `;
 
 const MainCardKey = styled.div`
@@ -161,7 +164,7 @@ const MainCardKey = styled.div`
 
 
 const MainCardTextArea = styled.div`
-   width: ${(props) => (props.isFirst ? '440px' : '360px')};
+   width: ${(props) => (props.isFirst ? '440px' : '320px')};
   height: ${(props) => (props.isFirst ? '560px' : '440px')};
   border: 1px solid #999999;
   border-radius: 30px;
@@ -341,7 +344,6 @@ const MainBoxBottom = styled.div`
   flex-direction: row;
   background-color: #ffffff;
   border: 1px solid #99999944;
-  box-shadow: 5px 5px 5px 2px #99999944;
 `;
 
 const MainBoxCategory = styled.div`
@@ -895,7 +897,7 @@ export function HomeMainNews() {
                     <MainCardTextArea>
                         <MainCardTitle>크리스마스 꼬리표 달면 10만원 훌쩍...고물가 자극하는 ‘호텔 케이크’ [소비의 달인]</MainCardTitle>
                         <MainCardContent>
-                            뉴욕포스트·포브스 등 주요 외신이 보도한 내용에 따르면 미국 와이오밍주 북서부와 몬태나주 남부, 아이다호주 동부에 걸쳐 있는 세계 최초이자 미국을 대표하는 국립공원인 옐로스톤 국립공원에서 최근 사슴만성소모성질병(CWD)에 걸린 사슴이 처음으로 확인됐다.
+                        12월을 앞두고 주요 호텔들이 크리스마스 케이크를 앞다퉈 내놓기 시작했다. 호텔 케이크라고 하더라도 평상시엔 10만원 미만이지만 크리스마스 꼬리표만 붙이면 10만원을 훌쩍 넘긴다. 올해도 10만원대는 기본이고 20만~30만원짜리 케이크가 줄줄이 출시되고 있다. 고물가 극복이 국가 경제의 화두로 떠오른 상황에서 치솟는 호텔 케이크 값은 사회적 위화감 조성은 물론 물가 상승을 부채질할수 있다는 우려도 나온다.
                         </MainCardContent>
                     </MainCardTextArea>
                 </MainCardNews>
@@ -933,31 +935,6 @@ export function HomeMainNews() {
         </Main>
     )
 }
-
-// export function HomeTrendNews() {
-//     return (
-//         <TrendBox>
-//             <GraphHeader>
-//                 <GraphTextBox>
-//                     <GraphTitle>오늘의 트렌드</GraphTitle>
-//                     <GraphText>연예 트렌드</GraphText>
-//                 </GraphTextBox>
-//                 <GraphBtn>
-//                     <ArrowButton src={ArrowLeft} />
-//                     <ArrowButton src={ArrowRight} />
-//                 </GraphBtn>
-//             </GraphHeader>
-//             <GraphBox>
-//                 <WordCloudBox>
-//                     <WordcloudResult />
-//                 </WordCloudBox>
-//                 <GraphContent>
-//                     <MyBarChart />
-//                 </GraphContent>
-//             </GraphBox>
-//         </TrendBox>
-//     )
-// }
 
 export function CategoryNewsComponent() {
     const { newsData, loading } = useNewsContext();
@@ -1007,9 +984,9 @@ export function CategoryNewsComponent() {
     // 날짜에 해당하는 데이터만 필터링
     const filteredNewsByDate = filterDataByDate(newsData, currentDate);
 
-
     // 페이징 코드
     const handlePageChange = (page) => {
+        window.scrollTo({ top: 0 });
         setPage(page);
     };
 
@@ -1236,10 +1213,12 @@ export function SearchNewsComponent() {
     const handleSearchInputChange = (e) => {
         const newSearchTerm = e.target.value;
         setSearchTerm(newSearchTerm);
+        console.log(newsData);
 
         // 검색어에 따라 전체 데이터 필터링
         const filteredResults = newsData.filter((item) =>
-            item.title.toLowerCase().includes(newSearchTerm.toLowerCase())
+            (item.articleContent && item.articleContent.toLowerCase().includes(newSearchTerm.toLowerCase())) ||
+            (item.title && item.title.toLowerCase().includes(newSearchTerm.toLowerCase()))
         );
 
         // 페이지 수 다시 계산하여 업데이트
@@ -1254,6 +1233,7 @@ export function SearchNewsComponent() {
 
     // 페이징 코드
     const handlePageChange = (page) => {
+        window.scrollTo({ top: 0 });
         setPage(page);
     };
 
@@ -1275,7 +1255,8 @@ export function SearchNewsComponent() {
 
     const searchList = () => {
         return paginatedData.filter((itemData) =>
-            itemData.title.toUpperCase().includes(searchTerm.toUpperCase())
+            (itemData.articleContent && itemData.articleContent.toUpperCase().includes(searchTerm.toUpperCase())) ||
+            (itemData.title && itemData.title.toUpperCase().includes(searchTerm.toUpperCase()))
         );
     };
 
@@ -1285,14 +1266,10 @@ export function SearchNewsComponent() {
         setSelectedItem(item);
         setModalOn(!modalOn);
 
+        // API 호출 등을 통해 viewCount를 1 증가시키는 작업 수행
         try {
-            // API 호출 등을 통해 viewCount를 1 증가시키는 작업 수행
             const response = await axios.get(`/api/news/detail/${item.id}`);
-
-            // useNewsViewContext 훅을 함수 컴포넌트 내에서 호출
             const { setNewsData } = useNewsViewContext();
-
-            // 훅을 호출하는 함수를 useEffect 내에서 실행
             useEffect(() => {
                 setNewsData(response.data);
                 console.log('데이터가 성공적으로 로드되었습니다:', response.data);
