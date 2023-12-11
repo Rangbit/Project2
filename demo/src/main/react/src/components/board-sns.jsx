@@ -6,7 +6,7 @@ import Comment from "../assets/comment-icon.svg"
 import ViewsLogo from "../assets/views.svg"
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Pagination from 'react-js-pagination';
-import { Link } from 'react-router-dom';
+import { Link, json } from 'react-router-dom';
 import { useBoardContext, useBoardViewContext, useBoardWriteContext } from '../data/board-data';
 import LoadingScreen from './loading-screen';
 import { BoardModalPortal } from './portal';
@@ -30,7 +30,7 @@ const Item = styled.div`
 
 const ItemImage = styled.img`
     width:100%;
-    height: calc(100% - 300px);
+    height: calc(auto - 300px);
     object-fit:cover;
 `;
 
@@ -314,7 +314,7 @@ const PaginationBox = styled.div`
 `;
 
 export function BoardSNS() {
-    const { loading } = useBoardContext();
+    const { newPostAdd, setNewPostAdd, boardData, setBoardData, loading } = useBoardContext();
     const { boardViewData, loadingViews } = useBoardViewContext();
     const { newPostAdded, setNewPostAdded } = useBoardWriteContext();
     const [columns, setColumns] = useState(3);
@@ -323,7 +323,7 @@ export function BoardSNS() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [page, setPage] = useState(-1);
     const [ref, inView] = useInView();
-    const [boardData, setBoardData] = useState([]);
+    const [boardDataSlice, setBoardDataSlice] = useState([]);
     const currentScrollPosition = window.scrollY;
 
     // 무한 스크롤
@@ -333,7 +333,7 @@ export function BoardSNS() {
             .get(`/api/board/list?page=${page + 1}&pageSize=${itemsPerPage}`)
             .then((res) => {
                 console.log(res.data);
-                setBoardData((prevData) => [...prevData, ...(res.data)]);
+                setBoardDataSlice((prevData) => [...prevData, ...(res.data)]);
                 setPage((prevPage) => prevPage + 1);
             })
             .catch((err) => { console.log(err) });
@@ -346,11 +346,44 @@ export function BoardSNS() {
             productFetch();
         }
     }, [inView, loading]);
+    // Ref를 사용하여 스크롤 위치 저장
+    const scrollPositionRef = useRef(currentScrollPosition);
+    const lastInViewRef = useRef(true);
 
+    // 스크롤 이벤트 핸들러
+    const handleScroll = () => {
+        if (!lastInViewRef.current) {
+            scrollPositionRef.current = window.scrollY;
+        }
+    };
 
+    // 스크롤 위치 복원 함수
+    const restoreScrollPosition = useCallback(() => {
+        window.scrollTo(0, scrollPositionRef.current);
+    }, []);
+
+    // 스크롤 이벤트 리스너 등록
     useEffect(() => {
-        window.scrollTo(0, currentScrollPosition);
-    }, [boardData]);
+        const handleScroll = () => {
+            scrollPositionRef.current = window.scrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    // 데이터 로드 후 스크롤 위치 복원
+    useEffect(() => {
+        if (!loading && inView && lastInViewRef.current) {
+            // inView 상태이면서 이전에 inView 상태가 아닌 경우에만 스크롤 위치 복원
+            restoreScrollPosition();
+        }
+        lastInViewRef.current = inView;
+    }, [loading, inView, restoreScrollPosition]);
+
 
     // 새로운글이 작성되었을때
     const NewBoardData = () => {
@@ -360,7 +393,7 @@ export function BoardSNS() {
                 .then((res) => {
                     console.log(res.data);
                     const newData = res.data[0];
-                    setBoardData((prevData) => [newData, ...prevData]);
+                    setBoardDataSlice((prevData) => [newData, ...prevData]);
                 })
                 .catch((err) => { console.log(err) });
         }
@@ -385,19 +418,25 @@ export function BoardSNS() {
         };
     }, []);
 
+    // 게시판 글 삭제시
+    const handleDelete = (deletedBdIdx) => {
+        setBoardDataSlice((prevData) => prevData.filter((item) => item.bdIdx !== deletedBdIdx));
+    };
+
+
     // DB 게시판데이터 변동시 재요청
     useEffect(() => {
         const axiosData = async () => {
             try {
                 const response = await axios.get('/api/board/list');
-                setBoardData(response.data);
+                setBoardDataSlice(response.data);
                 console.log('게시판 갱신 데이터가 성공적으로 로드되었습니다:', response.data);
             } catch (error) {
                 console.error('게시판 갱신 데이터 로드 중 오류 발생:', error);
             }
         };
         axiosData();
-    }, [setBoardData]);
+    }, [setBoardDataSlice]);
 
     const handleModal = async (item) => {
         setSelectedItem(item);
@@ -406,7 +445,7 @@ export function BoardSNS() {
         // API 호출 등을 통해 viewCount를 1 증가시키는 작업 수행
         try {
             const response = await axios.get(`/api/board/detail/${item.bdIdx}`);
-            setNewsData(response.data);
+            setBoardData(response.data);
             console.log('데이터가 성공적으로 로드되었습니다:', response.data);
         } catch (error) {
             console.error('데이터 로드 중 오류 발생:', error);
@@ -415,7 +454,7 @@ export function BoardSNS() {
     };
 
     // 가져온 데이터를 사용하여 UI를 렌더링
-    const boardItems = boardData && boardData.map((item, index) => {
+    const boardItems = boardDataSlice && boardDataSlice.map((item, index) => {
         // Moment.js를 사용하여 날짜 포맷 변경
         const formattedDate = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
 
@@ -423,7 +462,7 @@ export function BoardSNS() {
             <>
                 <Item key={item.id} onClick={() => handleModal(item)}>
                     {/* 이미지 추가시 들어갈 코드 */}
-                    {/* {imageUrl[item.id] && <ItemImage src={imageUrl[item.id]} />} */}
+                    {item.bdProfile && <ItemImage src={item.bdProfile} />}
                     <ItemTextBox>
                         <TextDate>{formattedDate}</TextDate>
                         <TextContent>{item.bdContent}</TextContent>
@@ -447,7 +486,7 @@ export function BoardSNS() {
 
     return (
         <Wrapper>
-            <Masonry columns={columns} spacing={2} defaultHeight={150} defaultColumns={1} defaultSpacing={2}>
+            <Masonry columns={columns} spacing={2} defaultHeight="auto" defaultColumns={1} defaultSpacing={2}>
                 {loading ? (
                     <LoadingScreen />
                 ) : (
@@ -456,7 +495,7 @@ export function BoardSNS() {
             </Masonry>
             <BoardBottomBox ref={ref}></BoardBottomBox>
             <BoardModalPortal>
-                {modalOn && <BoardModal item={selectedItem} onClose={() => setModalOn(false)} />}
+                {modalOn && <BoardModal item={selectedItem} onClose={() => setModalOn(false)} onDelete={handleDelete} />}
             </BoardModalPortal>
         </Wrapper>
     );
@@ -545,23 +584,37 @@ export function BoardMain() {
 
     const heights = [600, 300, 600, 900, 600, 600];
     const imageUrl = [
-        "https://images.ddengle.com/files/attach/images/64/029/476/019/b48a83cbac7ca97c12171c119ad4d761.jpg",
+        "https://imgnews.pstatic.net/image/448/2023/12/11/2023121190002_0_20231211064101489.jpg?type=w647",
         undefined,
         "https://i.pinimg.com/564x/6b/d7/9d/6bd79d2a74f29643d92d5f83688ffa70.jpg",
         "https://i.pinimg.com/564x/89/92/53/89925343ad179a782689d46ad76a6e2d.jpg",
         "https://pbs.twimg.com/media/FyXzQgSacAANkRw?format=jpg&name=900x900",
         "https://i.pinimg.com/564x/f4/0f/c8/f40fc808687f837af723bad07519e8b5.jpg",
+    ];
+    const username = ["신비한마법사", "달빛소녀", "스카이워커", "초콜릿드림", "은하수여행자", "비밀의정원"];
+    const date = ["2023.11.16 16:06", "2023.12.10 11:16", "2023.11.26 14:52", "2023.12.06 10:00", "2023.12.14 11:08", "2023.12.13 22:01"];
+    const content = [
+        "참 생각할수록 아쉽네요 금메달 딴 선수들은 군면제해주고 세계에 대한민국 위상을 우뚝세운 케이팝 가수들은 군대가야되니 균형이 안맞네요.",
+        "뉴스를 훑다가 이 기사를 발견했는데, 정말 기쁘고 뿌듯한 소식이에요. 이런 긍정적인 이야기가 더 많이 공유되면 좋겠습니다.",
+        "세상에는 힘들게 노력하는 사람들이 참 많은데, 이런 성과를 보면 정말 보람을 느낍니다. 모두에게 힘과 용기를 주는 소식입니다.",
+        "뉴스를 통해 듣는 이런 이야기가 마음을 따뜻하게 만들어줍니다. 세상은 어려운 일이 많지만, 희망을 주는 순간들이 더 많아지길 기대해 봅니다.",
+        "이런 긍정적인 소식을 듣게 되면 마음이 밝아져서 좋아요. 우리 주변에는 정말 대단한 사람들이 많아서 자랑스럽습니다. 꼭 힘내세요!",
+        "뉴스에 나오는 이런 성취 소식은 정말 힘이 됩니다. 노력하는 사람들에게 큰 격려가 되고, 우리도 조금 더 희망을 가져볼 수 있게 되네요."
     ]
-
+    const userimage = [
+        "https://i.pinimg.com/564x/a3/28/28/a328280b0f9c3fcb40a9038c7394ea38.jpg",
+        "https://i.pinimg.com/564x/be/a6/e3/bea6e3867a48d27e2aa47b8eb1864f98.jpg",
+        "https://i.pinimg.com/564x/83/bf/58/83bf5862268d5810661c9e84b0772db0.jpg",
+        "https://i.pinimg.com/564x/12/ad/00/12ad0029e4a7eb6184eff9cd2e23ac1c.jpg",
+        "https://i.pinimg.com/564x/6f/8f/3e/6f8f3ed0dd2e68f06419444fad297239.jpg",
+        "https://i.pinimg.com/564x/11/4a/e1/114ae149fa58b7a1d331f04f19a44f21.jpg"
+    ];
+    const comment = [54, 16, 42, 50, 76, 42];
+    const view = [63, 22, 48, 76, 99, 56];
     return (
         <Link to="/board" style={{ width: "100%", display: 'flex', justifyContent: "center", textDecoration: "none", color: "#000000" }}>
-            <Masonry
-                columns={columns}
-                spacing={2}
-                defaultHeight={300}
-                defaultColumns={1}
-                defaultSpacing={2}
-            >
+            <Masonry columns={columns} spacing={2} defaultHeight={150} defaultColumns={1} defaultSpacing={2}>
+
                 {/* {loading ? (
                     <LoadingScreen />
                 ) : (
@@ -572,18 +625,19 @@ export function BoardMain() {
                     <Item key={index} style={{ height: `${height}px` }}>
                         {imageUrl[index] && <ItemImage src={imageUrl[index]} />}
                         <ItemTextBox>
-                            <TextDate>2023.11.16 16:06</TextDate>
+                            <TextDate>{date[index]}</TextDate>
                             <TextContent>
-                                사용자가 작성한 게시판 글이 여기에 나올 예정입니다 AAAAABABABABABBABABABBABABABABVAAVAVAVA 사용자가 작성한 게시판 글이 여기에 나올 예정입니다
+                                {content[index]}
                             </TextContent>
-                            <TextUrl>https://www.naver.com/</TextUrl>
+                            {/* <TextUrl>https://www.naver.com/</TextUrl> */}
                             <LikeBox>
-                                <Comments src={Comment} /> 10
-                                <Likes src={Like} /> 52
+                                <Comments src={Comment} /> {comment[index]}
+                                {/* <Likes src={Like} /> 52 */}
+                                <Views src={ViewsLogo} />{view[index]}
                             </LikeBox>
                             <UserBox>
-                                <UserBoxImage></UserBoxImage>
-                                <UserBoxName>UserName</UserBoxName>
+                                <UserBoxImage src={userimage[index]} />
+                                <UserBoxName>{username[index]}</UserBoxName>
                             </UserBox>
                         </ItemTextBox>
                     </Item>
@@ -685,7 +739,7 @@ export function BoardProfile() {
                     </ItemTextBox>
                 </Item>
                 <BoardModalPortal>
-                    {modalOn && <BoardModal item={selectedItem} onClose={() => setModalOn(false)} />}
+                    {modalOn && <BoardModal fetchLatestBoardData={fetchLatestBoardData} item={selectedItem} onClose={() => setModalOn(false)} />}
                 </BoardModalPortal>
             </>
         );
@@ -748,9 +802,9 @@ export function BoardWriteArea() {
     // 이미지 업로드 처리
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
+        console.log(file.name);
         setUploadedImage(file);
 
-        // 이미지 미리보기를 표시할 경우 아래 코드를 사용할 수 있습니다.
         // console.log('업로드된 이미지:', file.name);
     };
 
@@ -762,25 +816,102 @@ export function BoardWriteArea() {
     // 게시물 작성 제출 처리
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // const boardData = {
+        //     bdContent: bdContent,
+        //     userEmail: userEmail
+        //   };
+          
+        //   const formData = new FormData();
+        //   formData.append('BoardRequestDTO', JSON.stringify(boardData));
+        //   formData.append('boardPhoto', uploadedImage); // 'file'은 사용자가 선택한 파일 객체
+          
+        //   axios.post('/api/board/create', formData, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data',
+        //     }
+        //   })
+        //     .then(response => {
+        //       // 서버 응답 처리
+        //       console.log(response.data);
+        //       setBoardWriteData(response.data);
+        //       setBoardData((prevData) => [response.data, ...prevData]);
+        //       console.log('글 작성이 성공했습니다:', response.data);
+  
+        //       setNewPostAdded(true);
+        //       setUploadedImage(null);
+        //       formRef.current.reset();
+        //     })
+        //     .catch(error => {
+        //       // 오류 처리
+        //       console.error('Error:', error);
+        //                   if (error.response) {
+        //         console.error('서버 응답 오류:', error.response.data);
+        //     } else if (error.request) {
+        //         console.error('서버 응답이 없음:', error.request);
+        //     } else {
+        //         console.error('요청 전 오류 발생:', error.message);
+        //     }
+        //     });
+
+
+
         try {
-            const response = await axios.post('/api/board/create', {
-                bdContent,
-                userEmail,
-                // 이미지 파일도 함께 전송 가능 (FormData 활용)
-            });
+            const formData = new FormData();
+            const jsonData = JSON.stringify({
+                bdContent : bdContent,
+                userEmail : userEmail
+            })
+            const jsonBlob = new Blob([jsonData], {type: "application/json"})
+            formData.append('BoardRequestDTO', jsonBlob);
+            console.log(formData);
+            // formData.append('bdContent', bdContent);
+            // formData.append('userEmail', userEmail);
+            // console.log('Keys:', formData.keys());
+            // console.log('All entries:', Array.from(formData.entries()));
+            // console.log(formData.entries());
+            // console.log('bdContent:', formData.get('BoardRequestDTO[bdContent]'));
+            // console.log('userEmail:', formData.get('BoardRequestDTO[userEmail]'));
+            // console.log('boardPhoto:', formData.get('boardPhoto'));
+            if (uploadedImage) {
+                formData.append('boardPhoto', uploadedImage);
+            }
+
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',  // 이 부분을 추가해보세요
+                },
+            };
+            console.log('axios config:', config);
+            const response = await axios.post('/api/board/create', formData, config);
+
             setBoardWriteData(response.data);
             setBoardData((prevData) => [response.data, ...prevData]);
             console.log('글 작성이 성공했습니다:', response.data);
 
             setNewPostAdded(true);
-
-            // 이미지 및 입력값 초기화
-            setUploadedImage(null);
-            formRef.current.reset();
         } catch (error) {
             console.error('글 작성 중 오류 발생:', error);
+            if (error.response) {
+                console.error('서버 응답 오류:', error.response.data);
+            } else if (error.request) {
+                console.error('서버 응답이 없음:', error.request);
+            } else {
+                console.error('요청 전 오류 발생:', error.message);
+            }
+        } finally {
+            setUploadedImage(null);
+            formRef.current.reset();
         }
     };
+
+
+
+
+
+
+
+
 
     return (
         <BoardWriteForm action='/api/board/create' ref={formRef} onSubmit={handleSubmit} method='post'>
